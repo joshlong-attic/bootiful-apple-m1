@@ -22,20 +22,15 @@ public class DemoApplication {
 	@Bean
 	ApplicationListener<ApplicationReadyEvent> ready(DatabaseClient dbc, CustomerRepository cr) {
 		return event -> {
-
 			var sql = """
 					create table CUSTOMER(
 					id serial primary key,
 					name varchar(255) not null
 					)
 					""";
-
 			var ddl = dbc.sql(sql).fetch().rowsUpdated();
-
 			var names = Flux.just("A", "B", "C").map(name -> new Customer(null, name)).flatMap(cr::save);
-
 			var all = cr.findAll();
-
 			ddl.thenMany(names).thenMany(all).subscribe(System.out::println);
 		};
 	}
@@ -51,8 +46,8 @@ interface CustomerRepository extends ReactiveCrudRepository<Customer, Integer> {
 class Customer {
 
 	@Id
-	public Integer id;
+	private Integer id;
 
-	public String name;
+	private String name;
 
 }
