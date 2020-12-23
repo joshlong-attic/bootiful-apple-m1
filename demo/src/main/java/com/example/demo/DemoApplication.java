@@ -19,7 +19,6 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-
     @Bean
     ApplicationListener<ApplicationReadyEvent> ready(
             DatabaseClient dbc,
@@ -49,6 +48,7 @@ public class DemoApplication {
 
 interface CustomerRepository extends ReactiveCrudRepository<Customer, Integer> {
 }
+
 @Data
 @AllArgsConstructor
 class Customer {
