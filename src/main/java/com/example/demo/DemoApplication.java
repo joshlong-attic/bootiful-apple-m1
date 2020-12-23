@@ -43,13 +43,16 @@ public class DemoApplication {
     ApplicationListener<ApplicationReadyEvent> dbReady(DatabaseClient dbc, CustomerRepository customerRepository) {
         return event -> {
 
-            var sql = """
+            var sql =
+                    """
                        create table CUSTOMER(
                            id serial primary key , 
                            name varchar(255) not null
                        ) 
                     """;
+
             var count = dbc.sql(sql).fetch().rowsUpdated();
+
             var names = Flux
                     .just("A", "B", "C")
                     .map(name -> new Customer(null, name))
